@@ -47,7 +47,7 @@
 #define INITIAL_SCROLL_MODE SCROLL_MODE_OFF
 
 /** Use larger faster I2C code. */
-#define OPTIMIZE_I2C 1
+#define OPTIMIZE_I2C 0
 
 /** AvrI2c uses 400 kHz fast mode if AVRI2C_FASTMODE is nonzero else 100 kHz. */
 #define AVRI2C_FASTMODE 1
