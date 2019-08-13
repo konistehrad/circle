@@ -8,7 +8,8 @@
 static const char FromKernel[] = "kernel";
 
 CKernel::CKernel (void)
-:	m_Screen (m_Options.GetWidth (), m_Options.GetHeight ()),
+:	m_CPUThrottle (CPUSpeedMaximum),
+  m_Screen (m_Options.GetWidth (), m_Options.GetHeight ()),
   m_Timer (&m_Interrupt),
   m_Logger (m_Options.GetLogLevel (), &m_Timer)
 {
@@ -74,27 +75,16 @@ TShutdownMode CKernel::Run (void)
   u16 counter = 0;
   while(1)
   {
-    m_Logger.Write (FromKernel, LogNotice, "Testing: %u", counter);
-    m_Logger.Write (FromKernel, LogNotice, "Writing to OLED...");
     m_oled.setRow(0);
     m_oled.setCol(0);
-    m_oled.print("Hello world: ");
-    m_oled.print(counter);
-    m_Logger.Write (FromKernel, LogNotice, "OLED write Complete!!");
-
-    if(state)
-    {
-      m_ActLED.On ();
-    }
-    else
-    {
-      m_ActLED.Off ();
-    }
+    m_oled.print("Loop: ");
+    m_oled.println(counter);
+    m_oled.print("Clock speed: ");
+    m_oled.print(m_CPUThrottle.GetClockRate()/1000000);
+    m_oled.print(" Mhz");
     
     state = !state;
     counter += 1;
-
-    m_Timer.SimpleMsDelay(500);
   }
 
   return ShutdownHalt;
