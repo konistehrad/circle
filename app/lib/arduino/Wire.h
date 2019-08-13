@@ -49,6 +49,11 @@ class TwoWire : public Stream {
     static uint8_t txBuffer[];
     static uint8_t txBufferIndex;
     static uint8_t txBufferLength;
+
+    unsigned m_nDevice;
+	  unsigned m_nBaseAddress;
+	  unsigned m_nCoreClockRate;
+    boolean  m_bFastMode;
     
 	  CGPIOPin m_SDA;
   	CGPIOPin m_SCL;

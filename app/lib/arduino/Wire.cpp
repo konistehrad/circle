@@ -23,6 +23,7 @@ extern "C" {
   #include <inttypes.h>
 }
 
+#include <assert.h>
 #include "Wire.h"
 #include "twi.h"
 
@@ -37,9 +38,13 @@ uint8_t TwoWire::txBufferLength = 0;
 
 TwoWire::TwoWire() : TwoWire(1) {}
 TwoWire::TwoWire(uint8_t nDevice)
-: m_SDA (nDevice == 0 ? 0 : 2, GPIOModeInput), // uninitialized to start
+: m_nDevice (nDevice),
+  m_nBaseAddress (nDevice == 0 ? ARM_BSC0_BASE : ARM_BSC1_BASE),
+  m_SDA (nDevice == 0 ? 0 : 2, GPIOModeInput), // uninitialized to start
 	m_SCL (nDevice == 0 ? 1 : 3, GPIOModeInput)
-{}
+{
+  twi_initialize(m_nBaseAddress);
+}
 
 void TwoWire::begin(void){
   rxBufferIndex = 0;
@@ -51,7 +56,7 @@ void TwoWire::begin(void){
   m_SDA.SetMode(GPIOModeAlternateFunction0);
   m_SCL.SetMode(GPIOModeAlternateFunction0);
 
-  BSC1DIV = BSCF2DIV(100000);
+  setClock(100000);
 }
 
 void TwoWire::end(void){
@@ -60,7 +65,13 @@ void TwoWire::end(void){
 }
 
 void TwoWire::setClock(uint32_t frequency){
-  BSC1DIV = BSCF2DIV(frequency);
+  PeripheralEntry ();
+
+	assert (frequency > 0);
+	u16 nDivider = (u16) (m_nCoreClockRate / frequency);
+	write32 (m_nBaseAddress + ARM_BSC_DIV__OFFSET, nDivider);
+	
+	PeripheralExit ();
 }
 
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop){
@@ -125,7 +136,8 @@ int TwoWire::peek(void){
 }
 
 void TwoWire::begin(uint8_t address){
-  begin();
+  return;
+  // begin();
 }
 
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity){
