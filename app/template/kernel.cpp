@@ -9,7 +9,6 @@ CKernel::CKernel (void)
 :	m_Screen (m_Options.GetWidth (), m_Options.GetHeight ()),
 	m_Timer (&m_Interrupt),
 	m_Logger (m_Options.GetLogLevel (), &m_Timer)
-	// TODO: add more member initializers here
 {
 }
 
@@ -61,7 +60,29 @@ TShutdownMode CKernel::Run (void)
 {
 	m_Logger.Write (FromKernel, LogNotice, "Compile time: " __DATE__ " " __TIME__);
 
+	
+
 	// TODO: add your code here
+	boolean state = false;
+	u16 counter = 0;
+	while(1)
+	{
+		m_Logger.Write (FromKernel, LogNotice, "Testing: %u", counter);
+		
+		if(state)
+		{
+			m_ActLED.On ();
+		}
+		else
+		{
+			m_ActLED.Off ();
+		}
+		
+		state = !state;
+		counter += 1;
+
+		m_Timer.SimpleMsDelay(500);
+	}
 
 	return ShutdownHalt;
 }

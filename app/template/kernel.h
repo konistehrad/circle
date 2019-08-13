@@ -15,7 +15,7 @@
 #include <circle/timer.h>
 #include <circle/logger.h>
 #include <circle/types.h>
-#include <template/myclass.h>
+#include <u8g2/u8g2.h>
 
 enum TShutdownMode
 {
@@ -46,9 +46,6 @@ private:
 	CInterruptSystem	m_Interrupt;
 	CTimer			m_Timer;
 	CLogger			m_Logger;
-
-	// TODO: add more members here
-	CMyClass		m_MyObject;
 };
 
 #endif

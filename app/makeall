@@ -1,25 +1,30 @@
 #!/bin/bash
 
-make="${MAKE:-make}"
+make="${MAKE:-gmake}"
 
-cd lib
+pushd lib
 
-cd template
+pushd template
 $make $1 $2 || exit
-cd ..
+popd
+
+pushd arduino
+$make $1 $2 || exit
+popd 
 
 # TODO: Add new libs here
-#cd subdir
-#$make $1 $2 || exit
-#cd ..
-
-cd ..
-
-cd template
+pushd u8g2
 $make $1 $2 || exit
-cd ..
+popd 
+
+popd
+
+pushd template
+$make $1 $2 || exit
+popd
 
 # TODO: Add new apps here
 #cd subdir
 #$make $1 $2 || exit
 #cd ..
+
