@@ -17,6 +17,12 @@
 #include <circle/types.h>
 
 #include "arduino/Wire.h"
+// Arduino code expects this available globally,
+// but occasionally we have to change the device
+// index and fast mode parameters.
+// Find a better way to do this.
+static TwoWire Wire(1, TRUE);
+
 #include "SSD1306Ascii/SSD1306Ascii.h"
 #include "SSD1306Ascii/SSD1306AsciiWire.h"
 
@@ -49,7 +55,7 @@ private:
 	CInterruptSystem	m_Interrupt;
 	CTimer			m_Timer;
 	CLogger			m_Logger;
-	SSD1306AsciiWire oled;
+	SSD1306AsciiWire m_oled;
 };
 
 #endif

@@ -84,6 +84,4 @@ class TwoWire : public Stream {
     using Print::write;
 };
 
-extern TwoWire Wire;
-
 #endif

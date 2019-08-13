@@ -145,4 +145,3 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity){
   return requestFrom(address, quantity, (uint8_t)true);
 }
 
-TwoWire Wire = TwoWire();
