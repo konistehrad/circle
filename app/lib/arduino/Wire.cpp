@@ -36,10 +36,11 @@ uint8_t TwoWire::txBuffer[BUFFER_LENGTH];
 uint8_t TwoWire::txBufferIndex = 0;
 uint8_t TwoWire::txBufferLength = 0;
 
-TwoWire::TwoWire() : TwoWire(1) {}
-TwoWire::TwoWire(uint8_t nDevice)
+TwoWire::TwoWire() : TwoWire(1, FALSE) {}
+TwoWire::TwoWire(uint8_t nDevice, boolean bFastMode)
 : m_nDevice (nDevice),
   m_nBaseAddress (nDevice == 0 ? ARM_BSC0_BASE : ARM_BSC1_BASE),
+  m_bFastMode(bFastMode),
   m_SDA (nDevice == 0 ? 0 : 2, GPIOModeInput), // uninitialized to start
 	m_SCL (nDevice == 0 ? 1 : 3, GPIOModeInput)
 {
@@ -56,7 +57,7 @@ void TwoWire::begin(void){
   m_SDA.SetMode(GPIOModeAlternateFunction0);
   m_SCL.SetMode(GPIOModeAlternateFunction0);
 
-  setClock(100000);
+  setClock(m_bFastMode ? 400000 : 100000);
 }
 
 void TwoWire::end(void){

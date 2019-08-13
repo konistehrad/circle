@@ -60,7 +60,7 @@ class TwoWire : public Stream {
 
   public:
     TwoWire();
-    TwoWire(uint8_t nDevice);
+    TwoWire(uint8_t nDevice, boolean bFastMode);
     void begin();
     void end();
     void begin(uint8_t);
