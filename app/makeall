@@ -4,16 +4,11 @@ make="${MAKE:-gmake}"
 
 pushd lib
 
-pushd template
-$make $1 $2 || exit
-popd
-
 pushd arduino
 $make $1 $2 || exit
 popd 
 
-# TODO: Add new libs here
-pushd u8g2
+pushd SSD1306Ascii
 $make $1 $2 || exit
 popd 
 

@@ -17,7 +17,6 @@
 #define Print_h
 #include <circle/types.h>
 #include <inttypes.h>
-#include <stdio.h> // for size_t
 #include "WString.h"
 #define DEC 10
 #define HEX 16

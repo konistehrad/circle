@@ -15,7 +15,10 @@
 #include <circle/timer.h>
 #include <circle/logger.h>
 #include <circle/types.h>
-#include <u8g2/u8g2.h>
+
+#include "arduino/Wire.h"
+#include "SSD1306Ascii/SSD1306Ascii.h"
+#include "SSD1306Ascii/SSD1306AsciiWire.h"
 
 enum TShutdownMode
 {
@@ -46,6 +49,7 @@ private:
 	CInterruptSystem	m_Interrupt;
 	CTimer			m_Timer;
 	CLogger			m_Logger;
+	SSD1306AsciiWire oled;
 };
 
 #endif

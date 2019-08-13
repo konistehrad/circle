@@ -4,11 +4,11 @@
 
 CIRCLEHOME = ../../..
 
-OBJS	=  Print.o twi.o Wire.o WString.o itoa.o
+OBJS	=  SSD1306Ascii.o 
 
-LIBS = $(CIRCLEHOME)/lib/libcircle.a
+LIBS	= $(CIRCLEHOME)/app/lib/arduino/libarduino.a
 
-libarduino.a: $(OBJS)
+libssd1306ascii.a: $(OBJS)
 	@echo "  AR    $@"
 	@rm -f $@
 	@$(AR) cr $@ $(OBJS)

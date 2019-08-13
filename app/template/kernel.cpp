@@ -3,6 +3,9 @@
 //
 #include "kernel.h"
 
+
+#define I2C_ADDRESS 0x3C
+
 static const char FromKernel[] = "kernel";
 
 CKernel::CKernel (void)
@@ -60,7 +63,12 @@ TShutdownMode CKernel::Run (void)
 {
 	m_Logger.Write (FromKernel, LogNotice, "Compile time: " __DATE__ " " __TIME__);
 
-	
+  Wire.begin();
+  Wire.setClock(400000L);
+	m_Logger.Write (FromKernel, LogNotice, "Initializing OLED...");
+	oled.begin(&Adafruit128x64, I2C_ADDRESS);
+  oled.setFont(System5x7);
+	m_Logger.Write (FromKernel, LogNotice, "OLED Initialization Complete!");
 
 	// TODO: add your code here
 	boolean state = false;
@@ -68,7 +76,14 @@ TShutdownMode CKernel::Run (void)
 	while(1)
 	{
 		m_Logger.Write (FromKernel, LogNotice, "Testing: %u", counter);
-		
+
+
+		m_Logger.Write (FromKernel, LogNotice, "Writing to OLED...");
+		oled.clear();
+  	oled.print("Hello world: ");
+		oled.print(counter);
+	m_Logger.Write (FromKernel, LogNotice, "OLED write Complete!!");
+
 		if(state)
 		{
 			m_ActLED.On ();
