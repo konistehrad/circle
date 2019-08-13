@@ -23,45 +23,6 @@
 #include "WString.h"
 #include "itoa.h"
 
-int toupper (int c)
-{
-	if ('a' <= c && c <= 'z') c -= 'a' - 'A';
-	return c;
-}
-
-int tolower(int c)
-{
-    if (c >= 'A' && c <= 'Z') return c +'a'-'A';
-    return c;
-}
-
-int isspace(int c)
-{
-  switch(c)
-  {
-    case '\t':
-    case '\n':
-    case '\v':
-    case '\f':
-    case '\r':
-    case ' ' : return 1;
-  }
-  return 0;
-}
-
-char *strrchr(const char *cp, int ch)
-{
-  char *save;
-  char c;
-
-  for (save = (char *) 0; (c = *cp); cp++) {
-  if (c == ch)
-    save = (char *) cp;
-  }
-
-  return save;
-}
-
 String::String( const char *value )
 {
   if ( value == NULL )
