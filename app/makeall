@@ -2,24 +2,14 @@
 
 make="${MAKE:-make}"
 
-cd lib
+pushd lib
 
-cd template
+pushd u8g2
 $make $1 $2 || exit
-cd ..
+popd
 
-# TODO: Add new libs here
-#cd subdir
-#$make $1 $2 || exit
-#cd ..
+popd # lib
 
-cd ..
-
-cd template
+pushd oledtest
 $make $1 $2 || exit
-cd ..
-
-# TODO: Add new apps here
-#cd subdir
-#$make $1 $2 || exit
-#cd ..
+popd #oledtest
