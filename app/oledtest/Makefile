@@ -4,7 +4,7 @@
 
 CIRCLEHOME = ../..
 
-OBJS	= main.o kernel.o
+OBJS	= main.o kernel.o oledtask.o
 
 LIBS	= $(CIRCLEHOME)/app/lib/u8g2/libu8g2.a \
 	  	  $(CIRCLEHOME)/lib/libcircle.a \

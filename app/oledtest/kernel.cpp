@@ -2,16 +2,17 @@
 // kernel.cpp
 //
 #include "kernel.h"
+#include "oledtask.h"
 
 static const char FromKernel[] = "kernel";
 
 CKernel::CKernel (void)
 : m_Screen (m_Options.GetWidth (), m_Options.GetHeight ()),
-//  m_Serial (&m_Interrupt, FALSE),
+  m_Serial (&m_Interrupt, FALSE),
   m_Timer (&m_Interrupt),
   m_Logger (m_Options.GetLogLevel(), &m_Timer),
 	m_Console (&m_Serial),
-  m_I2CMaster (CMachineInfo::Get()->GetDevice(DeviceI2CMaster), FALSE)
+  m_I2CMaster (CMachineInfo::Get()->GetDevice(DeviceI2CMaster), TRUE)
 {
 }
 
@@ -96,18 +97,20 @@ TShutdownMode CKernel::Run (void)
   u8g2_SetPowerSave(&u8g2, 0);
   m_Logger.Write(FromKernel, LogNotice, "u8 init complete!");
 
-  u8g2_ClearBuffer(&u8g2);
-  u8g2_SetFont(&u8g2, u8g2_font_ncenB08_tr);
-  u8g2_DrawStr(&u8g2, 1, 18, "U8g2 on Circle");
-  u8g2_SendBuffer(&u8g2);
-
-  u8g2_SetFont(&u8g2, u8g2_font_unifont_t_symbols);
-  u8g2_DrawGlyph(&u8g2, 112, 56, 0x2603);
-  u8g2_SendBuffer(&u8g2);
-
+  COLEDTask* view = new COLEDTask(&u8g2);
   while(1) {
-    m_ActLED.Blink(100, 1000, 1000);
+    m_Event.Clear ();
+    view->Heartbeat();
+    m_Timer.StartKernelTimer (1 * HZ, TimerHandler, this);
+    m_Event.Wait ();
   }
 
   return ShutdownHalt;
+}
+
+void CKernel::TimerHandler (TKernelTimerHandle hTimer, void *pParam, void *pContext)
+{
+	CKernel *pThis = (CKernel *) pParam;
+	assert (pThis != 0);
+	pThis->m_Event.Set ();
 }

@@ -7,6 +7,7 @@
 #define U8X8_USE_PINS
 #define U8X8_WITH_USER_PTR
 
+#include <circle/types.h>
 #include <circle/memory.h>
 #include <circle/actled.h>
 #include <circle/koptions.h>
@@ -19,7 +20,8 @@
 #include <circle/logger.h>
 #include <circle/input/console.h>
 #include <circle/i2cmaster.h>
-#include <circle/types.h>
+#include <circle/sched/scheduler.h>
+#include <circle/sched/synchronizationevent.h>
 #include <u8g2/u8g2.h>
 #include <u8g2/U8g2lib.h>
 
@@ -41,6 +43,8 @@ public:
 	TShutdownMode Run (void);
 
 private:
+	static void TimerHandler (TKernelTimerHandle hTimer, void *pParam, void *pContext);
+	
 	void dieWithBlinkPattern(uint8_t);
 
 	CMemorySystem		m_Memory;
@@ -56,6 +60,9 @@ private:
 	CConsole		m_Console;
 	CI2CMaster	m_I2CMaster;
 
+	CScheduler		m_Scheduler;
+	CSynchronizationEvent	m_Event;
+	
   u8g2_t u8g2;
 	CircleU8x8Hal u8hal;
 };
