@@ -17,7 +17,6 @@
 #include <circle/serial.h>
 #include <circle/timer.h>
 #include <circle/logger.h>
-#include <circle/usb/usbhcidevice.h>
 #include <circle/input/console.h>
 #include <circle/i2cmaster.h>
 #include <circle/types.h>
@@ -54,7 +53,6 @@ private:
 	CSerialDevice		m_Serial;
 	CTimer			m_Timer;
 	CLogger			m_Logger;
-
 	CConsole		m_Console;
 	CI2CMaster	m_I2CMaster;
 

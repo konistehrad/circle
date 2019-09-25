@@ -1,5 +1,7 @@
 #include "U8g2lib.h"
 
+static const char FromU8G2[] = "u8g2";
+
 uint8_t u8x8_arm_circle_gpio_and_delay(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
 {
     CircleU8x8Hal* hal = (CircleU8x8Hal*)u8x8_GetUserPtr(u8x8);
@@ -25,36 +27,46 @@ uint8_t u8x8_arm_circle_gpio_and_delay(u8x8_t *u8x8, uint8_t msg, uint8_t arg_in
             break;
   
         case U8X8_MSG_GPIO_AND_DELAY_INIT:  
+            hal->logger->WriteNoAlloc(FromU8G2, LogNotice, "U8X8_MSG_GPIO_AND_DELAY_INIT start...");
             for( unsigned i = 0; i < U8X8_PIN_CNT; i++ )
             {
                 if ( u8x8->pins[i] != U8X8_PIN_NONE )
                 {
-                    auto circlePin = hal->GetPin(u8x8, i);
+                    CGPIOPin* circlePin = hal->GetPin(u8x8, i);
                     if(circlePin == NULL) continue;
+
+                    hal->logger->Write(
+                        FromU8G2, 
+                        LogNotice, 
+                        "Found pin with value %d yields circle pin %d", u8x8->pins[i], circlePin
+                    );
 
                     if ( i < U8X8_PIN_OUTPUT_CNT )
                     {
+                        hal->logger->Write(FromU8G2, LogNotice, "initializing output pin %d", i);
                         circlePin->SetMode(GPIOModeOutput);
                     }
                     else
                     {
+                        hal->logger->Write(FromU8G2, LogNotice, "initializing pullup pin %d", i);
                         circlePin->SetMode(GPIOModeOutput);
                         circlePin->Write(HIGH);
                     }
                 }
             }
+            hal->logger->WriteNoAlloc(FromU8G2, LogNotice, "U8X8_MSG_GPIO_AND_DELAY_INIT complete!");
             break;
   
         case U8X8_MSG_GPIO_CS:
-            hal->TryWrite(u8x8, U8X8_PIN_CS, arg_int ? HIGH : LOW);
+            // hal->TryWrite(u8x8, U8X8_PIN_CS, arg_int ? HIGH : LOW);
             break;
   
         case U8X8_MSG_GPIO_DC:
-            hal->TryWrite(u8x8, U8X8_PIN_DC, arg_int ? HIGH : LOW);
+            // hal->TryWrite(u8x8, U8X8_PIN_DC, arg_int ? HIGH : LOW);
             break;  
   
         case U8X8_MSG_GPIO_RESET:
-            hal->TryWrite(u8x8, U8X8_PIN_RESET, arg_int ? HIGH : LOW);
+            // hal->TryWrite(u8x8, U8X8_PIN_RESET, arg_int ? HIGH : LOW);
             break;
   
         default:
