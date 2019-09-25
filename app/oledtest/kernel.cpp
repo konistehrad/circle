@@ -97,7 +97,7 @@ TShutdownMode CKernel::Run (void)
   u8g2_SetPowerSave(&u8g2, 0);
   m_Logger.Write(FromKernel, LogNotice, "u8 init complete!");
 
-  COLEDTask* view = new COLEDTask(&u8g2);
+  COLEDTask* view = new COLEDTask(&u8g2, &m_CPUThrottle);
   while(1) {
     m_Event.Clear ();
     view->Heartbeat();

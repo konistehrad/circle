@@ -12,6 +12,7 @@
 #include <circle/actled.h>
 #include <circle/koptions.h>
 #include <circle/devicenameservice.h>
+#include <circle/cputhrottle.h>
 #include <circle/exceptionhandler.h>
 #include <circle/interrupt.h>
 #include <circle/screen.h>
@@ -44,13 +45,14 @@ public:
 
 private:
 	static void TimerHandler (TKernelTimerHandle hTimer, void *pParam, void *pContext);
-	
+
 	void dieWithBlinkPattern(uint8_t);
 
 	CMemorySystem		m_Memory;
 	CActLED			m_ActLED;
 	CKernelOptions		m_Options;
 	CDeviceNameService	m_DeviceNameService;
+	CCPUThrottle		m_CPUThrottle;
 	CExceptionHandler	m_ExceptionHandler;
 	CInterruptSystem	m_Interrupt;
 	CScreenDevice		m_Screen;
