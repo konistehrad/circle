@@ -23,15 +23,10 @@ struct CircleU8x8Hal
   CSPIMaster* spiMaster;
 
   CGPIOManager* pinManager;
-  CGPIOPin* pins[U8X8_PIN_CNT];
+  CGPIOPin* pins[U8X8_PIN_CNT] = {NULL};
 
   CTimer* timer;
   CLogger* logger;
-
-  CircleU8x8Hal()
-  {
-    for(int i = 0; i < U8X8_PIN_CNT; ++i) pins[i] = NULL;
-  }
 
   CGPIOPin* GetPin(u8x8_t *u8x8, unsigned i) 
   { 
