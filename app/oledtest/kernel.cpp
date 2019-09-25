@@ -80,15 +80,12 @@ boolean CKernel::Initialize (void)
   }
   if(!bOK) this->dieWithBlinkPattern(7);
 
-  m_ActLED.Blink(3, 1000, 1000);
-
   return bOK;
 }
 
 TShutdownMode CKernel::Run (void)
 {
   m_Logger.WriteNoAlloc(FromKernel, LogNotice, "Compile time: " __DATE__ " " __TIME__);
-  m_Logger.WriteNoAlloc(FromKernel, LogNotice, "Initializing u8...");
 
   u8hal.i2cMaster = &m_I2CMaster;
   u8hal.timer = &m_Timer;
@@ -98,7 +95,6 @@ TShutdownMode CKernel::Run (void)
   u8g2_InitDisplay(&u8g2);
   u8g2_SetPowerSave(&u8g2, 0);
   m_Logger.Write(FromKernel, LogNotice, "u8 init complete!");
-  CTimer::SimpleMsDelay(750);
 
   u8g2_ClearBuffer(&u8g2);
   u8g2_SetFont(&u8g2, u8g2_font_ncenB08_tr);
@@ -106,7 +102,7 @@ TShutdownMode CKernel::Run (void)
   u8g2_SendBuffer(&u8g2);
 
   u8g2_SetFont(&u8g2, u8g2_font_unifont_t_symbols);
-  u8g2_DrawGlyph(&u8g2, 112, 56, 0x2603 );
+  u8g2_DrawGlyph(&u8g2, 112, 56, 0x2603);
   u8g2_SendBuffer(&u8g2);
 
   while(1) {
