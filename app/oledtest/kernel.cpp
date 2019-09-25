@@ -85,7 +85,7 @@ boolean CKernel::Initialize (void)
 
 TShutdownMode CKernel::Run (void)
 {
-  m_Logger.WriteNoAlloc(FromKernel, LogNotice, "Compile time: " __DATE__ " " __TIME__);
+  m_Logger.Write(FromKernel, LogNotice, "Compile time: " __DATE__ " " __TIME__);
 
   u8hal.i2cMaster = &m_I2CMaster;
   u8hal.timer = &m_Timer;

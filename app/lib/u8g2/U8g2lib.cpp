@@ -9,8 +9,7 @@ uint8_t u8x8_arm_circle_gpio_and_delay(u8x8_t *u8x8, uint8_t msg, uint8_t arg_in
     {
         case U8X8_MSG_DELAY_NANO:            // delay arg_int * 1 nano second
             // TODO: find nanosecond calculation for Circle
-            //data->timer->usDelay(arg_int == 0 ? 0 : 1);
-            for(uint8_t i = 0; i < 10; ++i) {}
+            hal->timer->usDelay(arg_int == 0 ? 0 : 1);
             break;    
     
         case U8X8_MSG_DELAY_100NANO:        // delay arg_int * 100 nano seconds
