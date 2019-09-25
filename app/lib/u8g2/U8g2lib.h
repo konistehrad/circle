@@ -3,13 +3,14 @@
 #define U8X8_USE_PINS
 #define U8X8_WITH_USER_PTR
 
-#include "u8g2.h"
-#include "u8x8.h"
 #include <circle/i2cmaster.h>
 #include <circle/spimaster.h>
 #include <circle/gpiomanager.h>
 #include <circle/gpiopin.h>
 #include <circle/timer.h>
+
+#include "u8g2.h"
+#include "u8x8.h"
 
 struct CircleU8x8Hal
 {

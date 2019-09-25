@@ -42,6 +42,8 @@ public:
 	TShutdownMode Run (void);
 
 private:
+	void dieWithBlinkPattern(uint8_t);
+
 	CMemorySystem		m_Memory;
 	CActLED			m_ActLED;
 	CKernelOptions		m_Options;
@@ -52,7 +54,6 @@ private:
 	CSerialDevice		m_Serial;
 	CTimer			m_Timer;
 	CLogger			m_Logger;
-	CUSBHCIDevice		m_USBHCI;
 
 	CConsole		m_Console;
 	CI2CMaster	m_I2CMaster;
